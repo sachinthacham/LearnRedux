@@ -1,6 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { add } from "../store/CardSlice";
 
 const Card = ({ product }) => {
+  const dispatch = useDispatch();
+  const addToCart = (product) => {
+    dispatch(add(product));
+  };
+
   return (
     <div
       key={product.id}
@@ -19,7 +26,10 @@ const Card = ({ product }) => {
             LKR {product.price}
           </span>
 
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200">
+          <button
+            onClick={() => addToCart(product)}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200"
+          >
             Add to Cart
           </button>
         </div>
