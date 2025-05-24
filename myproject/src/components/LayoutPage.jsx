@@ -1,13 +1,19 @@
 import React from "react";
 import Navbar from "./NavBar";
-import Product from "./Product";
+import { Provider } from "react-redux";
+import store from "../store/Store";
+import { Outlet } from "react-router-dom";
 
 const LayoutPage = () => {
   return (
-    <div>
-      <Navbar />
-      <Product />
-    </div>
+    <Provider store={store}>
+      <div>
+        <Navbar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+    </Provider>
   );
 };
 
