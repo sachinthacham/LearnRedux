@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Card from "./Card";
-import { fetchProductDetails } from "../services/BackendServices";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../store/ProductSlice";
 
 const Product = () => {
-  const [products, setProducts] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    const fetchProducts = async () => {
-      const data = await fetchProductDetails();
-      setProducts(data);
-    };
-    fetchProducts();
+    dispatch(getProducts());
   }, []);
+  const { data: products, status } = useSelector((state) => state.products);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "error") {
+    return <div>Error</div>;
+  }
 
   return (
     <div className="grid grid-cols-4 gap-10 px-10 m-10">
